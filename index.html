@@ -324,7 +324,7 @@ const SOUNDS = {
   music: new Audio("hangok/stresszes_zene.mp3")
 };
 
-  const allImages = [...FACES, ...BONUS_IMAGES];
+  const allImages = [...FACES, ...BONUS_IMAGES, BOMB_IMAGE];
 
 function preloadImages() {
   return Promise.all(
@@ -393,7 +393,13 @@ const resultMessageElement = document.getElementById("resultMessage");
 const resultTitleElement = document.getElementById("resultTitle");
 
 const holes = [...document.querySelectorAll(".hole")];
+startButton.disabled = true;
+startButton.textContent = "Képek betöltése...";
 
+preloadImages().then(() => {
+  startButton.disabled = false;
+  startButton.textContent = "Mehet";
+});
 let score = 0;
 let hits = 0;
 let secondsLeft = ROUND_LENGTH;
